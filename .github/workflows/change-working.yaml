@@ -1,0 +1,33 @@
+name: Change Working Dir & Shell
+on: [push]
+defaults:  # Workflow Level defaults
+  run:
+    shell: bash
+jobs:
+  show-working-directory-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 실행
+        run: uname -a   
+      - name: make test_folder
+        working-directory: /home/runner
+        run: mkdir test_folder
+      - name: 파일내용확인
+        run: cat sample.txt        
+  show-working-directory-win:
+    runs-on: windows-latest
+    defaults:  # Job Level Defaults
+      run:
+        shell: pwsh
+    steps:
+      - name: 현재 워킹디렉토리에서 파일 목록 보기
+        run: Get-ComputerInfo
+      - name: 파이썬 쉘
+        shell: python  # Step Level Default Shell
+        run: |
+          import sys
+          print(sys.version)
+      - name: 노드 쉘
+        shell: node{0}  # Step Level Default Shell
+        run: |
+          console.log(process.version)       
